@@ -36,7 +36,7 @@ class READ_PROD_OUT():
         _tmp_csv_file = self.files[0]
         self.delimiter = '|' if '|' in open(_tmp_csv_file).read() else ','
         _tmp_df = pd.read_csv(_tmp_csv_file, self.delimiter)
-        known_lambda_time_columns = ['times(ps)', 'lambda_restraints', 'lambda_electrostatics', 'lambda_sterics', 'lambda_electrostatics_env', 'lambda_electrostatics_chgprod_square']
+        known_lambda_time_columns = ['times(ps)', 'lambda_restraints', 'lambda_electrostatics', 'lambda_sterics', 'lambda_restraints2', 'lambda_electrostatics_env', 'lambda_electrostatics_chgprod_square']
         for idx in range(0, len(_tmp_df.columns)):
             if _tmp_df.columns[idx] in known_lambda_time_columns:
                 self.index_col.append(idx)

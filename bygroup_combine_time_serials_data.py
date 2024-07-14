@@ -9,16 +9,21 @@ import copy
 import re
 
 def extract_tuple_and_substract(string):
-    pattern = r'\((\d+\.?\d*),\s*(\d+\.?\d*),\s*(\d+\.?\d*)\)'
+    # pattern = r'\((\d+\.?\d*),\s*(\d+\.?\d*),\s*(\d+\.?\d*)\)'
+    pattern = r'\(([\d.]+(?:,\s*[\d.]+)*)\)\s*to\s*\(([\d.]+(?:,\s*[\d.]+)*)\)'
     matches = re.findall(pattern, string)
     lambda_float_diff_eq1_num = 0
-    if len(matches) == 2:
-        tuple1 = tuple(float(x) for x in matches[0])
-        tuple2 = tuple(float(x) for x in matches[1])
+    # print(matches)
+    if len(matches) == 1:
+        # [('0.0, 1.0, 0.2', '0.0, 1.0, 0.25')]
+        tuple1 = tuple(float(x) for x in matches[0][0].split(','))
+        tuple2 = tuple(float(x) for x in matches[0][1].split(','))
         subtracted_tuple = tuple(abs(a - b) for a, b in zip(tuple1, tuple2))
         for lambda_float_diff in subtracted_tuple:
             if lambda_float_diff == 1:
                 lambda_float_diff_eq1_num+=1
+    else:
+        raise ValueError(f"Cannot find the two lambda tuple in the string: {string}")
     return lambda_float_diff_eq1_num
 
 def get_newest_file(pattern):
@@ -148,7 +153,7 @@ class TimeSeriesDataFrameCombiner():
     def __init__(self, df_basic_pattern, base_path, plotting_plan=['moving','forward', 'reverse']):
         self.df_basic_pattern = df_basic_pattern # _bar_
         self.base_path = base_path # /HOME/scz1641/run/BACE1_bygroup/3rd_batch/lig_81/openmm_run/complex
-        self.sub_string_dir = self.get_side_thermo_path(self.base_path, ['restraints*', 'electrostatics*', 'sterics*']) 
+        self.sub_string_dir = self.get_side_thermo_path(self.base_path, ['restraints*', 'electrostatics*', 'sterics*', 'release*']) 
         self.plot_fe_he_std_dir = {}
         self.FE_combine_obj = FreeEnergyDataFrameCombiner('free_ene.csv', self.sub_string_dir)
         

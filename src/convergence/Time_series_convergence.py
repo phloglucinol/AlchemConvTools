@@ -124,7 +124,7 @@ class ANA_FEP_TOOLS():
             The TIME_SERIAL_DATA object that contains the three demension data(fe&std, lambda, time_ratio) of the moving estimate
         '''
         self.all_df = all_df
-        self.all_df_fe_obj = CAL_FREE_ENERGY(self.all_df, False, 1)
+        self.all_df_fe_obj = CAL_FREE_ENERGY(self.all_df, False, 1,)
         ori_index_list = list(self.all_df.index.names)
         ori_index_list.pop(0)
         self.lambda_list = ori_index_list

@@ -775,6 +775,7 @@ class CAL_FREE_ENERGY():
         if unit=='kbT':
             pass
         elif unit=='kcal/mol':
+            # print(init_data_df)
             init_data_df.columns=['FEP_forward_bythislambda(kcal/mol)','FEP_reverse_bythislambda(kcal/mol)']
             init_data_df['FEP_forward_bythislambda(kcal/mol)']=init_data_df['FEP_forward_bythislambda(kcal/mol)'].astype(float)
             init_data_df['FEP_reverse_bythislambda(kcal/mol)']=init_data_df['FEP_reverse_bythislambda(kcal/mol)'].astype(float)
